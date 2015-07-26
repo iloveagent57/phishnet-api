@@ -13,6 +13,11 @@ def has_kwargs(*args):
 
 class PhishNetApi(object):
     def __init__(self, api_key, data_format='json'):
+        """
+        :param api_key: Your phish.net API private key
+        :param data_format: The format of data to return, default is JSON.
+        :returns: A new API object with methods to access data from several endpoints.
+        """
         self.api_key = api_key
         self.data_format = data_format
         self._base_url = 'https://api.phish.net/api.js'
@@ -62,6 +67,7 @@ class PhishNetApi(object):
         """
         return self._get_method('pnet.shows.query', kwargs)
 
+    @has_kwargs('showdate', 'showid')
     def shows_setlist(self, **kwargs):
         """
         :param showdate: The date of the show in YYYY-mm-dd format
@@ -80,3 +86,9 @@ class PhishNetApi(object):
         :returns: A list of reviews filtered by username, the date of the show, or both.
         """
         return self._get_method('pnet.reviews.query', kwargs)
+
+
+def get_api():
+    from configuration import CONFIGURATION
+
+    return PhishNetApi(CONFIGURATION['api']['private_key'])

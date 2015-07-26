@@ -2,7 +2,7 @@ import unittest
 
 import mock
 
-from pnet.api import has_kwargs, PhishNetApi
+from pnet.api import get_api, has_kwargs, PhishNetApi
 
 
 class TestHasKwargs(unittest.TestCase):
@@ -91,3 +91,10 @@ class TestPhishNetApi(unittest.TestCase):
 
             self.assertEqual([{'likes': 'yes'}], result)
             get_method.assert_called_once_with('pnet.reviews.query', {'showdate': '2014-12-31'})
+
+    def test_api(self):
+        with mock.patch.dict('pnet.configuration.CONFIGURATION', {'api': {'private_key': 'foo'}}):
+            api = get_api()
+
+            self.assertEqual('foo', api.api_key)
+            self.assertEqual('json', api.data_format)
