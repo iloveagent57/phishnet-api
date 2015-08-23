@@ -93,8 +93,10 @@ class TestPhishNetApi(unittest.TestCase):
             get_method.assert_called_once_with('pnet.reviews.query', {'showdate': '2014-12-31'})
 
     def test_api(self):
-        with mock.patch.dict('pnet.configuration.CONFIGURATION', {'api': {'private_key': 'foo'}}):
-            api = get_api()
+        with mock.patch('pnet.api.json') as mock_json, \
+             mock.patch('pnet.api.open'):
+            mock_json.load.return_value = {'api': {'private_key': 'foo'}}
+            api = get_api('anything')
 
             self.assertEqual('foo', api.api_key)
             self.assertEqual('json', api.data_format)
