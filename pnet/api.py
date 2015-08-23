@@ -1,3 +1,4 @@
+import json
 import requests
 
 
@@ -88,7 +89,6 @@ class PhishNetApi(object):
         return self._get_method('pnet.reviews.query', kwargs)
 
 
-def get_api():
-    from configuration import CONFIGURATION
-
-    return PhishNetApi(CONFIGURATION['api']['private_key'])
+def get_api(config_file):
+    config = json.load(config_file)
+    return PhishNetApi(config['api']['private_key'])
