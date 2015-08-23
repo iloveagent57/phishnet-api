@@ -17,7 +17,7 @@ with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
 
 setup(
     name='phishnet-api',
-    version='1.0.1',
+    version='1.0.2',
     description='A wrapper for the phish.net API',
     long_description=long_description,
     url='https://github.com/iloveagent57/phishnet-api',
